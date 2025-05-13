@@ -1,100 +1,53 @@
-print("ROCK PAPER SCISSOR!")
-
 import pyttsx3
-
-voicecommand=str(input("Do You Want a Voice Assistant? Press 'Y' for Yes and 'N' for No:"))
-
-if voicecommand==("Y"):
-    print("This is your voice assistant")
-    engine=pyttsx3.init()
-    engine.say("Hello welcome to Rock Paper Scisssors with the computer, press 'R' for Rock, 'P' for Paper and 'S' for Scissor")
-    engine.runAndWait()
-
-if voicecommand==("N"):
-    print("Loading..")
-    
-a=str(input("choose! press 'R' for Rock , press 'P' for Paper ,press 'S' for Scissor:"))
-
 import random
-list=["R","P","S"]
-random_element=random.choice(list)
 
-if a==("S") and random_element==("P") and voicecommand==("Y"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
-    engine=pyttsx3.init()
-    engine.say("Congrats You Won!")
-    engine.runAndWait()
+def speak(text, voicecommand, engine):
+    if voicecommand == "Y" and engine:
+        engine.say(text)
+        engine.runAndWait()
 
-if a==("S") and random_element==("P") and voicecommand==("N"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
+def play_game():
+    print("ROCK PAPER SCISSOR!")
 
+    voicecommand = input("Do You Want a Voice Assistant? Press 'Y' for Yes and 'N' for No: ").strip().upper()
 
-if a==("S") and random_element==("R") and voicecommand==("Y"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU LOST:(")
-    engine=pyttsx3.init()
-    engine.say("Sorry You Lost")
-    engine.runAndWait()
+    engine = None
+    if voicecommand == "Y":
+        print("This is your voice assistant")
+        engine = pyttsx3.init()
+        engine.say("Hello! Welcome to Rock Paper Scissors with the computer. Press 'R' for Rock, 'P' for Paper, and 'S' for Scissors.")
+        engine.runAndWait()
+    else:
+        print("Loading...")
 
-if a==("S") and random_element==("R") and voicecommand==("N"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU LOST:(")
+    a = input("Choose! Press 'R' for Rock, 'P' for Paper, 'S' for Scissors: ").strip().upper()
+    if a not in ["R", "P", "S"]:
+        print("Invalid input. Please enter R, P, or S.")
+        speak("Invalid input. Please enter R, P, or S.", voicecommand, engine)
+        return
 
-if a == ("R") and random_element == ("P") and voicecommand==("Y"):
-    print("YOU CHOSE:", a, "COMPUTER CHOSE:", random_element)
-    print("YOU LOST:(")
-    engine=pyttsx3.init()
-    engine.say("Sorry You Lost")
-    engine.runAndWait()
+    computer_choice = random.choice(["R", "P", "S"])
 
-if a == ("R") and random_element == ("P") and voicecommand==("N"):
-    print("YOU CHOSE:", a, "COMPUTER CHOSE:", random_element)
-    print("YOU LOST:(")
+    print("YOU CHOSE:", a, "| COMPUTER CHOSE:", computer_choice)
 
-if a==("R") and random_element==("S") and voicecommand==("Y"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
-    engine=pyttsx3.init()
-    engine.say("congrats you won")
-    engine.runAndWait()
+    if a == computer_choice:
+        print("GAME DRAW!")
+        speak("Game Drawn", voicecommand, engine)
+    elif (a == "R" and computer_choice == "S") or \
+         (a == "P" and computer_choice == "R") or \
+         (a == "S" and computer_choice == "P"):
+        print("YOU WON!")
+        speak("Congrats! You won.", voicecommand, engine)
+    else:
+        print("YOU LOST :(")
+        speak("Sorry, you lost.", voicecommand, engine)
 
-if a==("R") and random_element==("S") and voicecommand==("N"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
+    play_again = input("Do you want to play again? Press 'Y' for Yes and 'N' for No: ").strip().upper()
+    if play_again == "Y":
+        play_game()
+    else:
+        print("Thanks for playing!")
+        speak("Thanks for playing!", voicecommand, engine)
 
-if a==("P") and random_element==("R") and voicecommand==("Y"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
-    engine=pyttsx3.init()
-    engine.say("Congrats You Won")
-    engine.runAndWait()
+play_game()
 
-if a==("P") and random_element==("R") and voicecommand==("N"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU WON!")
-
-if a==("P") and random_element==("S") and voicecommand==("Y"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU LOST:(")
-    engine=pyttsx3.init()
-    engine.say("sorry you lost")
-    engine.runAndWait()
-
-if a==("P") and random_element==("S") and voicecommand==("N"):
-    print("YOU CHOSE:",a,"COMPUTER CHOSE:",random_element)
-    print("YOU LOST:(")
-
-if a==random_element and voicecommand==("Y"):
-    print("YOU CHOSE:", a, "COMPUTER CHOSE:", random_element)
-    print("GAME DRAW!")
-    engine=pyttsx3.init()
-    engine.say("Game Drawn")
-    engine.runAndWait()
-    
-if a==random_element and voicecommand==("N"):
-    print("YOU CHOSE:", a, "COMPUTER CHOSE:", random_element)
-    print("GAME DRAW!")
-
-#CODE ENDS HERE
